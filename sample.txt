@@ -1,0 +1,43 @@
+#!/bin/bash
+ 
+# Variables
+
+SOURCE_DIR="/path/to/source"       # Path to the directory you want to back up
+
+BACKUP_DIR="/path/to/backup"       # Path to the backup directory
+
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S") # Timestamp format YYYYMMDD_HHMMSS
+
+BACKUP_NAME="backup_$TIMESTAMP"    # Backup folder name with timestamp
+ 
+# Check if source directory exists
+
+if [ ! -d "$SOURCE_DIR" ]; then
+
+  echo "Source directory $SOURCE_DIR does not exist. Exiting."
+
+  exit 1
+
+fi
+ 
+# Create a new backup directory with the timestamp
+
+mkdir -p "$BACKUP_DIR/$BACKUP_NAME"
+ 
+# Copy files from the source to the backup directory
+
+cp -r "$SOURCE_DIR/"* "$BACKUP_DIR/$BACKUP_NAME"
+ 
+# Verify if the backup was successful
+
+if [ $? -eq 0 ]; then
+
+  echo "Backup completed successfully."
+
+  echo "Backup location: $BACKUP_DIR/$BACKUP_NAME"
+
+else
+
+  echo "Backup failed."
+
+fi
